@@ -4,7 +4,12 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  ManyToMany,
+  ManyToOne,
+  JoinTable,
 } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
+import { Category } from '../../categories/entities/category.entity';
 
 @Entity() // <-- Table 'post'
 export class Post {
@@ -20,6 +25,10 @@ export class Post {
   @CreateDateColumn() // <-- Date de création, gérée automatiquement
   createdAt: Date;
 
-  @Column() // <-- Pour l'instant, juste l'ID de l'auteur. Nous améliorerons ça !
-  authorId: number;
+  @ManyToOne(() => User, (user) => user.posts) // <-- Relation Many-to-One avec User
+  authors: User;
+
+  @ManyToMany(() => Category, (category) => category.posts) // <-- Relation Many-to-Many avec Category
+  @JoinTable() // <-- Table de jointure pour la relation Many-to-Many
+  categories: Category[];
 }

@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Post } from '../../posts/entities/post.entity';
 
 @Entity() // <-- Marque cette classe comme une table 'user'
 export class User {
@@ -13,4 +14,7 @@ export class User {
 
   @Column({ nullable: true }) // <-- Colonne 'name' pouvant être nulle
   name: string;
+
+  @OneToMany(() => Post, (post) => post.authors) // <-- Relation One-to-Many avec Post
+  posts: Post[];
 }

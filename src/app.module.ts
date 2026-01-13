@@ -4,6 +4,10 @@ import { AppService } from './app.service';
 import { PostsModule } from './posts/posts.module';
 import { CategoriesModule } from './categories/categories.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
+import { Post } from './posts/entities/post.entity';
+import { Category } from './categories/entities/category.entity';
 
 @Module({
   imports: [
@@ -14,11 +18,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'admin',
       password: 'mysecretpassword',
       database: 'blogapi',
-      entities: [],
+      entities: [User, Post, Category],
       synchronize: true,
     }),
     PostsModule,
     CategoriesModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
